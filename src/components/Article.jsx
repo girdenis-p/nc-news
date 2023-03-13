@@ -1,17 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchUserByUsername } from "../utils/api";
 
 import "./Article.css"
 
 function Article({ article }) {
-  const [author, setAuthor] = useState({"username":"jessjelly","name":"Jess Jelly","avatar_url":"https://vignette.wikia.nocookie.net/mrmen/images/4/4f/MR_JELLY_4A.jpg/revision/latest?cb=20180104121141"})
+  const [author, setAuthor] = useState(null)
+
+  useEffect(() => {
+    fetchUserByUsername(article.author)
+      .then(user => {
+        setAuthor(user);
+      })
+  })
 
   return (
     <article className="Article">
       <h2>{article.title}</h2>
       <img src={article.article_img_url} alt="" />
       <aside>
-        <img src={author.avatar_url} alt={author.name}></img>
-        <p>Article by {author.name}</p>
+        {
+          author === null ?
+          <p>Fetching author...</p> :
+          <>
+            <img src={author.avatar_url} alt={author.name}></img>
+            <p>Article by {author.name}</p>
+          </>
+        }
       </aside>
       <p>{article.body}</p>
     </article>
