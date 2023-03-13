@@ -1,21 +1,27 @@
 import { useEffect, useState } from "react";
-import { fetchArticles } from "../utils/api";
+import { fetchArticlesData } from "../utils/api";
 import ArticleCard from "./ArticleCard";
 
 import './Articles.css'
 
 function Articles() {
-  const [articles, setArticles] = useState([])
+  const [articles, setArticles] = useState([]);
+  const [totalArticleCount, setTotalArticleCount] = useState();
+
   const [isLoading, setIsLoading] = useState(true);
+
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     setIsLoading(true)
-    fetchArticles()
-      .then(fetchedArticles => {
-        setArticles(currArticles => [...currArticles, ...fetchedArticles]);
+    fetchArticlesData(page)
+      .then(articlesData => {
+        setArticles(currArticles => [...currArticles, ...articlesData.articles]);
+        setTotalArticleCount(articlesData.total_count)
+
         setIsLoading(false);
       })
-  }, [])
+  }, [page])
 
   return (
     <main className="Articles">
@@ -30,7 +36,11 @@ function Articles() {
       {
         isLoading ? 
         <p>Fetching articles...</p> :
-        null
+        totalArticleCount <= articles.length ?
+        <p>There are no more articles!</p> :
+        <button onClick={() => setPage(currPage => {
+          return currPage + 1;
+        })}>Fetch more articles</button> 
       }
     </main>
   )
