@@ -1,7 +1,7 @@
 .ArticlePage {
   width: 95vw;
 
-  margin: 10px auto;
+  margin: 0 auto;
 }
 
 @media (min-width: 900px) {

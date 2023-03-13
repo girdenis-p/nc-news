@@ -1,0 +1,19 @@
+.ArticleCard {
+  width: 90%;
+
+  border: 4px double black;
+  border-radius: 4px;
+  margin-top: 15px;
+  padding: 10px; 
+}
+
+.ArticleCard img {
+  max-width: 95%;
+}
+
+.ArticleCard h3,
+.ArticleCard p {
+  margin-top: 5px;
+
+  max-width: 95%;
+}
