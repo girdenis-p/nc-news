@@ -1,0 +1,16 @@
+.Comment {
+  margin: 20px 0px;
+  padding: 10px 5px;
+  border: 1px solid black;
+
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+
+.Comment > .CommentAuthorInfo {
+  grid-column: 1 / span 1;
+}
+
+.Comment > p {
+  grid-column: 2 / span 1;
+}

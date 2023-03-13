@@ -3,3 +3,7 @@
   margin-top: 20px;
   padding-top: 10px;
 }
+
+.Comments ul {
+  list-style-type: none;
+}
