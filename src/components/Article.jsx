@@ -22,7 +22,7 @@ function Article({ article }) {
           author === null ?
           <p>Fetching author...</p> :
           <>
-            <img src={author.avatar_url} alt={author.name}></img>
+            <img src={author.avatar_url} alt={author.name} />
             <p>Article by {author.name}</p>
           </>
         }
