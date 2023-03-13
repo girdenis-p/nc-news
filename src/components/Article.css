@@ -1,0 +1,22 @@
+.Article > img {
+  max-width: 95%;
+
+  margin: 10px auto;
+}
+
+.Article aside {
+  border: 1px solid black;
+  margin: 15px auto;
+  padding: 5px;
+
+  display: flex;
+  align-items: center;
+}
+
+.Article aside > img {
+  max-width: 40px;
+
+  border: 1px solid black;
+  border-radius: 50%;
+  margin: 0px 10px;
+}

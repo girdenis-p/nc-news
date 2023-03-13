@@ -1,0 +1,11 @@
+.ArticlePage {
+  width: 95vw;
+
+  margin: 0 auto;
+}
+
+@media (min-width: 900px) {
+  .ArticlePage {
+    width: 855px;
+  }
+}
