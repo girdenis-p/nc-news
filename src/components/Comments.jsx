@@ -26,7 +26,7 @@ function Comments({ articleId }) {
   return (
     <section className="Comments">
       <h3>Comments</h3>
-      <CommentAdder articleId={articleId} />
+      <CommentAdder articleId={articleId} setComments={setComments} />
       <ul>
         {
           comments.map(comment =>
