@@ -28,7 +28,7 @@ function ArticlePage() {
         <p>Fetching article...</p> :
         <Article article={article} />
       }
-      <Comments />
+      <Comments articleId={articleId} />
     </main>
   )
 }
