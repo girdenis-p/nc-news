@@ -22,6 +22,12 @@ export const fetchArticleById = (articleId) => {
 export const fetchUserByUsername = (username) => {
   return newsApi.get(`/users/${username}`)
     .then(res => res.data.user)
+} 
+
+export const incVotesOnArticle = (articleId, incVotes) => {
+  return newsApi.patch(`articles/${articleId}`, {
+    inc_votes: incVotes
+  })
 }
 
 export const fetchCommentsDataByArticleId = (articleId, page) => {
