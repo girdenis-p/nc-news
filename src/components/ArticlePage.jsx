@@ -4,6 +4,7 @@ import Article from "./Article";
 import { fetchArticleById } from "../utils/api"
 
 import "./ArticlePage.css"
+import ArticleVoter from "./ArticleVoter";
 
 
 function ArticlePage() {
@@ -27,6 +28,7 @@ function ArticlePage() {
         <p>Fetching article...</p> :
         <Article article={article} />
       }
+      <ArticleVoter articleId={articleId} />
     </main>
   )
 }
