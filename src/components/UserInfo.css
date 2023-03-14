@@ -1,0 +1,9 @@
+.UserAvatar {
+  width: 40px;
+  height: 40px;
+
+  object-fit: fill;
+
+  border: 1px solid black;
+  border-radius: 50%;
+}

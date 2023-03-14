@@ -4,11 +4,12 @@ import Article from "./Article";
 import { fetchArticleById } from "../utils/api"
 
 import "./ArticlePage.css"
+import Comments from "./Comments";
 
 
 function ArticlePage() {
 
-  const {article_id: articleId} = useParams();
+  const { articleId } = useParams();
 
   const [article, setArticle] = useState(null);
 
@@ -27,6 +28,7 @@ function ArticlePage() {
         <p>Fetching article...</p> :
         <Article article={article} />
       }
+      <Comments articleId={articleId} />
     </main>
   )
 }

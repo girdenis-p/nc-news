@@ -22,4 +22,14 @@ export const fetchArticleById = (articleId) => {
 export const fetchUserByUsername = (username) => {
   return newsApi.get(`/users/${username}`)
     .then(res => res.data.user)
-} 
+}
+
+export const fetchCommentsDataByArticleId = (articleId, page) => {
+  return newsApi.get(`/articles/${articleId}/comments`, {
+    params: {
+      limit: 10,
+      p: page
+    }
+  })
+    .then(res => res.data)
+}
