@@ -1,13 +1,25 @@
 import { useEffect, useRef, useState } from "react";
-import { incVotesOnArticle } from "../utils/api";
+import { fetchArticleById, incVotesOnArticle } from "../utils/api";
 import "./ArticleVoter.css"
 
 function ArticleVoter({ articleId }) {
   const [err, setErr] = useState('');
+  const [votes, setVotes] = useState(null);
   const [vote, setVote] = useState(+localStorage.getItem(`article${articleId}vote`) || 0);
   const prevVoteRef = useRef(vote);
 
   useEffect(() => {
+    fetchArticleById(articleId)
+      .then(article => {
+        setVotes(article.votes)
+      })
+  }, [articleId])
+
+  useEffect(() => {
+    setVotes(currVotes => {
+      return currVotes + (vote - prevVoteRef.current)
+    })
+
     setErr('')
     incVotesOnArticle(articleId, vote - prevVoteRef.current)
       .then(() => {
@@ -16,6 +28,9 @@ function ArticleVoter({ articleId }) {
       .catch((err) => {
         setErr("Something went wrong please try again")
         setVote(prevVoteRef.current);
+        setVotes(currVotes => {
+          return currVotes - (vote - prevVoteRef.current)
+        })
         localStorage.setItem(`article${articleId}vote`, prevVoteRef.current.toString());
       })
     
@@ -40,7 +55,13 @@ function ArticleVoter({ articleId }) {
 
   return (
     <section className="ArticleVoter">
-      <h3>Vote on this article</h3>
+      <h3>Vote on this article!</h3>
+      <p>Currently at:</p>
+      {
+        votes === null ?
+        <p className="VoteCount">Loading votes...</p> :
+        <p className="VoteCount">{votes} {Math.abs(votes) === 1 ? 'vote' : 'votes'}</p>
+      }
       <p>You {voteStatus} this article</p>
       <p>{err}</p>
       <button onClick={handleVote(1)} className={

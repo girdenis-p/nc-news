@@ -8,6 +8,10 @@
   margin: 5px;
 }
 
+.ArticleVoter .VoteCount {
+  margin-bottom: 15px;
+}
+
 .ArticleVoter button {
   margin: 15px;
   width: 6em;
