@@ -16,6 +16,7 @@ function ArticleVoter({ articleId }) {
       .catch((err) => {
         setErr("Something went wrong please try again")
         setVote(prevVoteRef.current);
+        localStorage.setItem(`article${articleId}vote`, prevVoteRef.current.toString());
       })
     
     //Note if the local storage setItem was in a promise, then if the client leaves the page before it was resolved the local storage
