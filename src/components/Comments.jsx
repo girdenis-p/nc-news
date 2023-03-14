@@ -32,7 +32,10 @@ function Comments({ articleId }) {
             )
         }
       </ul>
+      {totalCommentCount === 0 ?
+      <p className="NoCommentMessage">No comments here</p> :
       <PageIncrementer listName="comments" listLength={comments.length} totalCount={totalCommentCount} isLoading={isLoading} setPage={setPage} />
+      }
     </section>
   )
 }

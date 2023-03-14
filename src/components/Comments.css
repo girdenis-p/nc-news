@@ -4,6 +4,10 @@
   padding-top: 10px;
 }
 
+.Comments .NoCommentMessage {
+  margin: 15px;
+}
+
 .Comments ul {
   list-style-type: none;
 }
