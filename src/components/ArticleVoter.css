@@ -1,0 +1,19 @@
+.ArticleVoter {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.ArticleVoter h3 {
+  margin: 5px;
+}
+
+.ArticleVoter .VoteCount {
+  margin-bottom: 15px;
+}
+
+.ArticleVoter button {
+  margin: 15px;
+  width: 6em;
+}
+
