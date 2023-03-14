@@ -20,6 +20,7 @@ function CommentAdder({ articleId, setComments }) {
     postCommentOnArticle(articleId, {commentBody, loggedInUser})
       .then(comment => {
         setComments(currComments => [comment, ...currComments])
+        setCommentBody('');
       })
       .catch(() => {
         setErr('Something went wrong, please try again later.')
