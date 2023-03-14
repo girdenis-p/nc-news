@@ -9,7 +9,7 @@ import Comments from "./Comments";
 
 function ArticlePage() {
 
-  const {article_id: articleId} = useParams();
+  const { articleId } = useParams();
 
   const [article, setArticle] = useState(null);
 
