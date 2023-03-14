@@ -5,11 +5,12 @@ import { fetchArticleById } from "../utils/api"
 
 import "./ArticlePage.css"
 import ArticleVoter from "./ArticleVoter";
+import Comments from "./Comments";
 
 
 function ArticlePage() {
 
-  const {article_id: articleId} = useParams();
+  const { articleId } = useParams();
 
   const [article, setArticle] = useState(null);
 
@@ -29,6 +30,7 @@ function ArticlePage() {
         <Article article={article} />
       }
       <ArticleVoter articleId={articleId} />
+      <Comments articleId={articleId} />
     </main>
   )
 }

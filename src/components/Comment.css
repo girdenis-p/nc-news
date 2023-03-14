@@ -1,0 +1,20 @@
+.Comment {
+  margin: 20px 0px;
+  padding: 10px 5px;
+  border: 1px solid black;
+
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  column-gap: 10px;
+}
+
+.Comment > .CommentAuthorInfo {
+  grid-column: 1 / span 1;
+  
+  padding-right: 5px;
+  border-right: 1px solid black;
+}
+
+.Comment > p {
+  grid-column: 2 / span 1;
+}

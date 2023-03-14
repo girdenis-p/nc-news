@@ -29,3 +29,13 @@ export const incVotesOnArticle = (articleId, incVotes) => {
     inc_votes: incVotes
   })
 }
+
+export const fetchCommentsDataByArticleId = (articleId, page) => {
+  return newsApi.get(`/articles/${articleId}/comments`, {
+    params: {
+      limit: 10,
+      p: page
+    }
+  })
+    .then(res => res.data)
+}
