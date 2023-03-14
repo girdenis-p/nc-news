@@ -6,7 +6,11 @@ function ArticleVoter({ articleId }) {
   const [err, setErr] = useState('');
   const [votes, setVotes] = useState(null);
   const [vote, setVote] = useState(+localStorage.getItem(`article${articleId}vote`) || 0);
+  
+  const [buttonsDisabled, setButtonsDisabled] = useState(false);
+
   const prevVoteRef = useRef(vote);
+
 
   useEffect(() => {
     fetchArticleById(articleId)
@@ -16,6 +20,8 @@ function ArticleVoter({ articleId }) {
   }, [articleId])
 
   useEffect(() => {
+    setButtonsDisabled(true);
+
     setVotes(currVotes => {
       return currVotes + (vote - prevVoteRef.current)
     })
@@ -26,12 +32,15 @@ function ArticleVoter({ articleId }) {
         prevVoteRef.current = vote;
       })
       .catch((err) => {
-        setErr("Something went wrong please try again")
+        setErr("Something went wrong, please try again later.")
         setVote(prevVoteRef.current);
         setVotes(currVotes => {
           return currVotes - (vote - prevVoteRef.current)
         })
         localStorage.setItem(`article${articleId}vote`, prevVoteRef.current.toString());
+      })
+      .finally(() => {
+        setButtonsDisabled(false)
       })
     
     //Note if the local storage setItem was in a promise, then if the client leaves the page before it was resolved the local storage
@@ -62,18 +71,18 @@ function ArticleVoter({ articleId }) {
         <p className="VoteCount">Loading votes...</p> :
         <p className="VoteCount">{votes} {Math.abs(votes) === 1 ? 'vote' : 'votes'}</p>
       }
-      <p>You {voteStatus} this article</p>
+      <p>You {voteStatus} this article.</p>
       <p>{err}</p>
       <button onClick={handleVote(1)} className={
         vote === 1 ? "button--status-upvoted" : ""
-      }>{
+      } disabled={buttonsDisabled}>{
         vote === 1 ?
         "Liked" :
         "Like"
       }</button>
       <button onClick={handleVote(-1)} className={
         vote === -1 ? "button--status-downvoted" : ""
-      }>{
+      } disabled={buttonsDisabled}>{
         vote === -1 ?
         "Disliked" :
         "Dislike"
