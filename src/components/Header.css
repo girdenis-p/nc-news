@@ -1,4 +1,17 @@
 .Header {
   border-bottom: 3px double black;
   margin-bottom: 20px;
+  padding: 10px;
+
+  display: grid;
+
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+.Header h1 {
+  grid-column: 2 / span 1;
+}
+
+.Header .LoggedInInfo {
+  grid-column: 3 / span 1;
 }

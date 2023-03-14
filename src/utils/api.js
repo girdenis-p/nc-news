@@ -39,3 +39,11 @@ export const fetchCommentsDataByArticleId = (articleId, page) => {
   })
     .then(res => res.data)
 }
+
+export const postCommentOnArticle = (articleId, {commentBody, loggedInUser}) => {
+  return newsApi.post(`/articles/${articleId}/comments`, {
+    body: commentBody,
+    username: loggedInUser
+  })
+    .then(res => res.data.comment)
+}
