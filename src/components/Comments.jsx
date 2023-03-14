@@ -1,18 +1,26 @@
 import { useEffect, useState } from "react"
-import { fetchCommentsByArticleId } from "../utils/api";
+import { fetchCommentsDataByArticleId } from "../utils/api";
 import Comment from "./Comment";
 
 import "./Comments.css"
+import PageIncrementer from "./PageIncrementer";
 
 function Comments({ articleId }) {
   const [comments, setComments] = useState([]);
+  const [totalCommentCount, setTotalCommentCount] = useState();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    fetchCommentsByArticleId(articleId)
-      .then(comments => {
-        setComments(comments);
+    setIsLoading(true)
+    fetchCommentsDataByArticleId(articleId, page)
+      .then(commentsData => {
+        setComments(currComments => [...currComments, ...commentsData.comments]);
+        setTotalCommentCount(commentsData.total_count);
+        setIsLoading(false)
       })
-  }, [articleId])
+  }, [articleId, page])
 
   return (
     <section className="Comments">
@@ -24,6 +32,7 @@ function Comments({ articleId }) {
             )
         }
       </ul>
+      <PageIncrementer listName="comments" listLength={comments.length} totalCount={totalCommentCount} isLoading={isLoading} setPage={setPage} />
     </section>
   )
 }

@@ -3,6 +3,7 @@ import { fetchArticlesData } from "../utils/api";
 import ArticleCard from "./ArticleCard";
 
 import './Articles.css'
+import PageIncrementer from "./PageIncrementer";
 
 function Articles() {
   const [articles, setArticles] = useState([]);
@@ -33,15 +34,7 @@ function Articles() {
           )
         }
       </ul>
-      {
-        isLoading ? 
-        <p>Fetching articles...</p> :
-        totalArticleCount <= articles.length ?
-        <p>There are no more articles!</p> :
-        <button onClick={() => setPage(currPage => {
-          return currPage + 1;
-        })}>Fetch more articles</button> 
-      }
+      <PageIncrementer listName="articles" listLength={articles.length} totalCount={totalArticleCount} isLoading={isLoading} setPage={setPage} />
     </main>
   )
 }

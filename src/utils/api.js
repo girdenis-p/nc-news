@@ -24,7 +24,12 @@ export const fetchUserByUsername = (username) => {
     .then(res => res.data.user)
 }
 
-export const fetchCommentsByArticleId = (articleId) => {
-  return newsApi.get(`/articles/${articleId}/comments`)
-    .then(res => res.data.comments)
+export const fetchCommentsDataByArticleId = (articleId, page) => {
+  return newsApi.get(`/articles/${articleId}/comments`, {
+    params: {
+      limit: 10,
+      p: page
+    }
+  })
+    .then(res => res.data)
 }
