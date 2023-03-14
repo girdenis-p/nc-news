@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { fetchCommentsDataByArticleId } from "../utils/api";
 import Comment from "./Comment";
+import CommentAdder from "./CommentAdder";
 
 import "./Comments.css"
 import PageIncrementer from "./PageIncrementer";
@@ -25,6 +26,7 @@ function Comments({ articleId }) {
   return (
     <section className="Comments">
       <h3>Comments</h3>
+      <CommentAdder articleId={articleId} />
       <ul>
         {
           comments.map(comment =>
