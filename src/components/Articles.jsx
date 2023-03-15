@@ -4,6 +4,7 @@ import ArticleCard from "./ArticleCard";
 
 import './Articles.css'
 import PageIncrementer from "./PageIncrementer";
+import SortByForm from "./SortByForm";
 
 function Articles() {
   const [articles, setArticles] = useState([]);
@@ -27,6 +28,7 @@ function Articles() {
   return (
     <main className="Articles">
       <h2>All Articles</h2>
+      <SortByForm />
       <ul>
       {
         articles.map(article =>
