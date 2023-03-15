@@ -43,6 +43,8 @@ function Articles() {
   }, [topicSlug])
 
   useEffect(() => {
+    //These refs refer to the most upto date values. So if a user changes which topic to load, a response for the previous
+    //topic can be ignored.
     topicSlugRef.current = topicSlug;
     searchParamsRef.current = searchParams;
 
