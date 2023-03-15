@@ -5,6 +5,8 @@
 
 a {
   all: unset;
+  
+  cursor: pointer;
 }
 
 body {
