@@ -7,7 +7,7 @@
 
   display: flex;
   justify-content: space-around;
-  align-items: end;
+  align-items: flex-end;
 }
 
 .SortByForm label p {
