@@ -8,6 +8,10 @@
   column-gap: 10px;
 }
 
+.Comment section > p {
+  margin-bottom: 10px;
+}
+
 .Comment > .CommentAuthorInfo {
   grid-column: 1 / span 1;
   
