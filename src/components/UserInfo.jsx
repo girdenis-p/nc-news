@@ -17,7 +17,7 @@ function UserInfo({ username, precedingText }) {
     <>
       {
         author === null ?
-        <p>Fetching author...</p> :
+        <p>Fetching user...</p> :
         <>
           <img src={author.avatar_url} alt="" className="UserAvatar"/>
           <p>{precedingText} {author.name}</p>

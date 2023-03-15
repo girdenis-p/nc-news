@@ -4,11 +4,12 @@ const newsApi = axios.create({
   baseURL: 'https://news-api-project.onrender.com/api'
 })
 
-export const fetchArticlesData = (page) => {
+export const fetchArticlesData = ({page, topic}) => {
   return newsApi.get('/articles', {
     params: {
       limit: 10,
-      p: page
+      p: page,
+      topic
     }
   })
     .then(res => res.data);
@@ -22,7 +23,12 @@ export const fetchArticleById = (articleId) => {
 export const fetchUserByUsername = (username) => {
   return newsApi.get(`/users/${username}`)
     .then(res => res.data.user)
-} 
+}
+
+export const fetchTopics = () => {
+  return newsApi.get(`topics/`)
+    .then(res => res.data.topics)
+}
 
 export const incVotesOnArticle = (articleId, incVotes) => {
   return newsApi.patch(`articles/${articleId}`, {

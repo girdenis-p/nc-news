@@ -1,0 +1,49 @@
+.Nav { 
+  margin: 20px auto;
+  padding: 20px 5px;
+  border: 3px solid black;
+  
+  display: flex;
+  flex-direction: column;
+}
+
+
+.Nav a {
+  margin: 0 25px;
+  
+  font-size: 1em;
+  padding: 10px 2px;
+
+  border: 2px solid black;
+}
+
+.Nav a:hover {
+  color: blue;
+}
+
+.Nav a:focus {
+  outline: 3px solid blue;
+}
+
+
+@media (min-width: 600px) {
+
+  .Nav a:first-child {
+    margin-left: 0;
+  }
+  
+  .Nav a:last-child {
+    margin-right: 0;
+  }
+
+  .Nav {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .Nav a {
+    border-color: black;
+
+    width: 6em;
+  }
+}

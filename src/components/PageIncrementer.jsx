@@ -5,7 +5,7 @@ function PageIncrementer({ listName, listLength, isLoading, setPage, totalCount}
 
   return (
     isLoading ?
-    <p>Fetching more {listName}...</p> :
+    <p>Fetching {listName}...</p> :
     totalCount === listLength ?
     <p>No more {listName}!</p> :
     <button onClick={incrementPage}>Fetch more {listName}</button>
