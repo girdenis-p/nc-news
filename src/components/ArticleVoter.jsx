@@ -10,6 +10,7 @@ function ArticleVoter({ articleId }) {
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   const prevVoteRef = useRef(vote);
+  const renderedOnceRef = useRef(false);
 
 
   useEffect(() => {
@@ -20,32 +21,40 @@ function ArticleVoter({ articleId }) {
   }, [articleId])
 
   useEffect(() => {
-    setButtonsDisabled(true);
+    if (renderedOnceRef.current) {
 
-    setVotes(currVotes => {
-      return currVotes + (vote - prevVoteRef.current)
-    })
-
-    setErr('')
-    incVotesOnArticle(articleId, vote - prevVoteRef.current)
-      .then(() => {
-        prevVoteRef.current = vote;
+      setButtonsDisabled(true);
+  
+      setVotes(currVotes => {
+        return currVotes + (vote - prevVoteRef.current)
       })
-      .catch((err) => {
-        setErr("Something went wrong, please try again later.")
-        setVote(prevVoteRef.current);
-        setVotes(currVotes => {
-          return currVotes - (vote - prevVoteRef.current)
+  
+      setErr('')
+      incVotesOnArticle(articleId, vote - prevVoteRef.current)
+        .then(() => {
+          prevVoteRef.current = vote;
         })
-        localStorage.setItem(`article${articleId}vote`, prevVoteRef.current.toString());
-      })
-      .finally(() => {
-        setButtonsDisabled(false)
-      })
+        .catch((err) => {
+          setErr("Something went wrong, please try again later.")
+
+          setVote(prevVoteRef.current);
+          setVotes(currVotes => {
+            return currVotes - (vote - prevVoteRef.current)
+          })
+
+          localStorage.setItem(`article${articleId}vote`, prevVoteRef.current.toString());
+        })
+        .finally(() => {
+          setButtonsDisabled(false)
+        })
+
+      //Note if the local storage setItem was in a promise, then if the client leaves the page before it was resolved the local storage
+      // would never be set. Assuming that the promise resolving is more likely than the promise rejecting, I have placed this outside the promise.
+      localStorage.setItem(`article${articleId}vote`, vote.toString());
+    } else {
+      renderedOnceRef.current = true;
+    }
     
-    //Note if the local storage setItem was in a promise, then if the client leaves the page before it was resolved the local storage
-    // would never be set. Assuming that the promise resolving is more likely than the promise rejecting, I have placed this outside the promise.
-    localStorage.setItem(`article${articleId}vote`, vote.toString());
       
   }, [vote, articleId])
 
