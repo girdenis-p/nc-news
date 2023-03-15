@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { fetchArticlesData, fetchTopics } from "../utils/api";
 import ArticleCard from "./ArticleCard";
 
@@ -8,6 +8,8 @@ import PageIncrementer from "./PageIncrementer";
 import SortByForm from "./SortByForm";
 
 function Articles() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const { topic: topicSlug } = useParams();
 
   const [topicDescription, setTopicDescription] = useState(null);
@@ -20,10 +22,13 @@ function Articles() {
   const [page, setPage] = useState(1);
 
   //Set articles and page to initial states while re-rendering so that the useEffect will have articles as [] 
-  //and page at 1 when the topic changes
+  //and page at 1 when the topic or searchParams changes
   useMemo(() => {
     setArticles([]);
     setPage(1);
+  }, [searchParams, topicSlug])
+
+  useEffect(() => {
     setTopicDescription(null)
 
     if (topicSlug) {
@@ -42,14 +47,19 @@ function Articles() {
 
   useEffect(() => {
     setIsLoading(true)
-    fetchArticlesData({ page, topic: topicSlug })
+    fetchArticlesData({
+        page, 
+        topic: topicSlug,
+        sortBy: searchParams.get("sort_by"),
+        order: searchParams.get("order")
+      })
       .then(articlesData => {
         setArticles(currArticles => [...currArticles, ...articlesData.articles]);
         setTotalArticleCount(articlesData.total_count)
 
         setIsLoading(false);
       })
-  }, [page, topicSlug])
+  }, [page, topicSlug, searchParams])
 
 
   return (

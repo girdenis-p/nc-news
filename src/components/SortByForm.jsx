@@ -1,19 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import "./SortByForm.css"
 
 function SortByForm() {
-  const [sortBy, setSortBy] = useState("date");
-  const [order, setOrder] = useState("asc");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [sortBy, setSortBy] = useState(searchParams.get("sort_by") || "created_at");
+  const [order, setOrder] = useState(searchParams.get("order") || "desc");
+
+  //This will change the values in the form back to default if the user changes topic
+  //as queries reset when changing topic
+  useEffect(() => {
+   setSortBy(searchParams.get('sort_by') || "created_at") 
+   setOrder(searchParams.get('order') || "desc")
+  }, [searchParams])
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setSearchParams({
+      sort_by: sortBy,
+      order
+    })
+  } 
 
   return (
-    <form className="SortByForm">
+    <form className="SortByForm" onSubmit={handleSubmit}>
       <label>
         <p>Sort By:</p>
         <select value={sortBy} onChange={e => {
           setSortBy(e.target.value)
         }}>
-          <option value="date">Date</option>
+          <option value="created_at">Date</option>
           <option value="comment_count">Comment Count</option>
           <option value="votes">Votes</option>
         </select>
