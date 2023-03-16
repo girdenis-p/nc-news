@@ -1,0 +1,25 @@
+.SortByForm {
+  width: 95vw;
+
+  border: 1px solid black;
+  margin: 5px auto;
+  padding: 10px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.SortByForm label p {
+  margin-bottom: 5px;
+}
+
+.SortByForm button {
+  width: 6em;
+}
+
+@media (min-width: 900px) {
+  .SortByForm {
+    width: 855px;
+  }
+}

@@ -22,6 +22,10 @@ button {
   padding: 10px;
 }
 
+select {
+  padding: 10px;
+}
+
 .button--status-upvoted {
   background-color: lightgreen;
 }

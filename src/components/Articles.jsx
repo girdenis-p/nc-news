@@ -1,13 +1,18 @@
-import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
 import { fetchArticlesData, fetchTopics } from "../utils/api";
 import ArticleCard from "./ArticleCard";
 
 import './Articles.css'
 import PageIncrementer from "./PageIncrementer";
+import SortByForm from "./SortByForm";
 
 function Articles() {
+  const [searchParams] = useSearchParams();
+  const searchParamsRef = useRef(searchParams)
+
   const { topic: topicSlug } = useParams();
+  const topicSlugRef = useRef(topicSlug)
 
   const [topicDescription, setTopicDescription] = useState(null);
 
@@ -18,21 +23,19 @@ function Articles() {
 
   const [page, setPage] = useState(1);
 
-  //Set articles and page to initial states while re-rendering so that the useEffect will have articles as [] 
-  //and page at 1 when the topic changes
-  useMemo(() => {
-    setArticles([]);
-    setPage(1);
+  useEffect(() => {
     setTopicDescription(null)
 
     if (topicSlug) {
       fetchTopics(topicSlug)
         .then(topics => {
-          const matchingTopic = topics.find(singleTopic => {
-            return singleTopic.slug === topicSlug
-          })
-
-          setTopicDescription(matchingTopic.description)
+          if (topicSlugRef.current === topicSlug) {
+            const matchingTopic = topics.find(singleTopic => {
+              return singleTopic.slug === topicSlug
+            })
+            
+            setTopicDescription(matchingTopic.description)
+          }
         })
     } else {
       setTopicDescription('All the articles from every topic!')
@@ -40,15 +43,46 @@ function Articles() {
   }, [topicSlug])
 
   useEffect(() => {
+    //These refs refer to the most upto date values. So if a user changes which topic to load, a response for the previous
+    //topic can be ignored.
+    topicSlugRef.current = topicSlug;
+    searchParamsRef.current = searchParams;
+
+    setArticles([])
+    setPage(1);
     setIsLoading(true)
-    fetchArticlesData({ page, topic: topicSlug })
+    fetchArticlesData({
+        page: 1, 
+        topic: topicSlug,
+        sortBy: searchParams.get("sort_by"),
+        order: searchParams.get("order")
+      })
+      .then(articlesData => {
+        if (topicSlugRef.current === topicSlug && searchParamsRef.current === searchParams) {
+          setArticles(articlesData.articles);
+          setTotalArticleCount(articlesData.total_count)
+          
+          setIsLoading(false);
+        }
+      })
+  }, [topicSlug, searchParams])
+
+  useEffect(() => {
+    if (page !== 1) {
+      setIsLoading(true)
+      fetchArticlesData({
+        page: page, 
+        topic: topicSlugRef.current,
+        sortBy: searchParamsRef.current.get("sort_by"),
+        order: searchParamsRef.current.get("order")
+      })
       .then(articlesData => {
         setArticles(currArticles => [...currArticles, ...articlesData.articles]);
-        setTotalArticleCount(articlesData.total_count)
-
+        
         setIsLoading(false);
       })
-  }, [page, topicSlug])
+    }
+  }, [page])
 
 
   return (
@@ -57,12 +91,13 @@ function Articles() {
         topicSlug ? 
         `${topicSlug[0].toUpperCase() + topicSlug.slice(1)} Section` :
         "All Articles"
-        }</h2>
+      }</h2>
       <p className="TopicDescription">{
         topicDescription === null ?
         "Fetching description..." :
         topicDescription
-        }</p>
+      }</p>
+      <SortByForm />
       <ul>
       {
         articles.map(article =>
