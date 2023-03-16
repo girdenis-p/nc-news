@@ -55,3 +55,7 @@ export const postCommentOnArticle = (articleId, {commentBody, loggedInUser}) => 
   })
     .then(res => res.data.comment)
 }
+
+export const deleteCommentById = (commentId) => {
+  return newsApi.delete(`comments/${commentId}`)
+}

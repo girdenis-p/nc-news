@@ -4,6 +4,11 @@
   margin: 10px auto;
 }
 
+.Article p {
+  text-align: left;
+  margin-left: 10px;
+}
+
 .Article aside {
   border: 1px solid black;
   margin: 15px auto;
