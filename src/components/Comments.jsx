@@ -30,7 +30,7 @@ function Comments({ articleId }) {
       <ul>
         {
           comments.map(comment =>
-              <Comment key={comment.comment_id} comment={comment} />
+              <Comment key={comment.comment_id} comment={comment} setComments={setComments} />
             )
         }
       </ul>
