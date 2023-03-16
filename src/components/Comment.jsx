@@ -3,12 +3,15 @@ import "./Comment.css"
 import { useContext, useEffect, useRef, useState } from "react"
 import { UserContext } from "../contexts/User"
 import { dateDiffFromNow } from "../utils/utils"
+import { deleteCommentById } from "../utils/api"
 
 function Comment({ comment, setComments }) {
   const { loggedInUser } = useContext(UserContext);
 
   const [promptDeleteConfirmation, setPromptDeleteConfirmation] = useState(false);
   const [isPendingDelete, setIsPendingDelete] = useState(false);
+
+  const [err, setErr] = useState(null);
 
   const [commentHeight, setCommentHeight] = useState(0);
   const [commentWidth, setCommentWidth] = useState(0);
@@ -20,7 +23,23 @@ function Comment({ comment, setComments }) {
   }, [])
 
   const handleDelete = () => {
-    setIsPendingDelete(true) 
+    setIsPendingDelete(true)
+    setErr(null)
+
+    deleteCommentById(comment.comment_id)
+      .then(() => {
+        setComments(currComments => {
+          const commentIndex = currComments.indexOf(comment)
+
+          return currComments
+            .slice(0, commentIndex)
+            .concat(currComments.slice(commentIndex + 1))
+        })
+      })
+      .catch(() => {
+        setIsPendingDelete(false);
+        setErr("Something went wrong, please try again later");
+      })
   }
 
   return (
@@ -42,6 +61,11 @@ function Comment({ comment, setComments }) {
           {
             loggedInUser === comment.author ?
             <section className="DeleteCommentSection">
+              {
+                err === null ?
+                null:
+                <p className="ErrorMessage">{err}</p>
+              }
               {
                 promptDeleteConfirmation ? 
                 <>
