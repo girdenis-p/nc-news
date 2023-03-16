@@ -75,6 +75,11 @@ function Articles() {
             statusCode: 404,
             reason: "topic not found"
           })
+        } else if (res.status === 400) {
+          setErr({
+            statusCode: 400,
+            reason: "invalid query"
+          })
         }
       })
   }, [topicSlug, searchParams])

@@ -23,6 +23,11 @@ function ErrorPage({ reason, statusCode }) {
         <>
           <p>The topic you were looking for does not exist.</p>
         </> :
+        reason === "invalid query" ?
+        <>
+          <p>Your queries are invalid.</p>
+          <p>Please check the page address.</p>
+        </>:
         <></>
       }
     </main>
