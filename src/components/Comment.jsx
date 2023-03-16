@@ -2,6 +2,7 @@ import UserInfo from "./UserInfo"
 import "./Comment.css"
 import { useContext, useEffect, useRef, useState } from "react"
 import { UserContext } from "../contexts/User"
+import { dateDiffFromNow } from "../utils/utils"
 
 function Comment({ comment, setComments }) {
   const { loggedInUser } = useContext(UserContext);
@@ -35,6 +36,7 @@ function Comment({ comment, setComments }) {
         <li className="Comment" ref={commentRef}>
           <section className="CommentAuthorInfo">
             <UserInfo username={comment.author} precedingText="Comment by" />
+            <p>Posted {dateDiffFromNow(new Date(comment.created_at))} ago</p>
           </section>
           <p>{comment.body}</p>
           {
