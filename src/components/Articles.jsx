@@ -4,10 +4,13 @@ import { fetchArticlesData, fetchTopics } from "../utils/api";
 import ArticleCard from "./ArticleCard";
 
 import './Articles.css'
+import ErrorPage from "./ErrorPage";
 import PageIncrementer from "./PageIncrementer";
 import SortByForm from "./SortByForm";
 
 function Articles() {
+  const [err, setErr] = useState(null);
+
   const [searchParams] = useSearchParams();
   const searchParamsRef = useRef(searchParams)
 
@@ -48,6 +51,7 @@ function Articles() {
     topicSlugRef.current = topicSlug;
     searchParamsRef.current = searchParams;
 
+    setErr(null)
     setArticles([])
     setPage(1);
     setIsLoading(true)
@@ -63,6 +67,19 @@ function Articles() {
           setTotalArticleCount(articlesData.total_count)
           
           setIsLoading(false);
+        }
+      })
+      .catch(({ response : res }) => {
+        if (res.status === 404) {
+          setErr({
+            statusCode: 404,
+            reason: "topic not found"
+          })
+        } else if (res.status === 400) {
+          setErr({
+            statusCode: 400,
+            reason: "invalid query"
+          })
         }
       })
   }, [topicSlug, searchParams])
@@ -86,27 +103,33 @@ function Articles() {
 
 
   return (
-    <main className="Articles">
-      <h2>{
-        topicSlug ? 
-        `${topicSlug[0].toUpperCase() + topicSlug.slice(1)} Section` :
-        "All Articles"
-      }</h2>
-      <p className="TopicDescription">{
-        topicDescription === null ?
-        "Fetching description..." :
-        topicDescription
-      }</p>
-      <SortByForm />
-      <ul>
-      {
+    <>
+    {
+      err === null ?
+      <main className="Articles">
+        <h2>{
+          topicSlug ? 
+          `${topicSlug[0].toUpperCase() + topicSlug.slice(1)} Section` :
+          "All Articles"
+        }</h2>
+        <p className="TopicDescription">{
+          topicDescription === null ?
+          "Fetching description..." :
+          topicDescription
+        }</p>
+        <SortByForm />
+        <ul>
+        {
         articles.map(article =>
           <ArticleCard key={article.article_id} article={article} />
           )
         }
-      </ul>
-      <PageIncrementer listName="articles" listLength={articles.length} totalCount={totalArticleCount} isLoading={isLoading} setPage={setPage} />
-    </main>
+        </ul>
+        <PageIncrementer listName="articles" listLength={articles.length} totalCount={totalArticleCount} isLoading={isLoading} setPage={setPage} />
+      </main> :
+      <ErrorPage reason={err.reason} statusCode={err.statusCode} />
+    }
+    </>
   )
 }
 
