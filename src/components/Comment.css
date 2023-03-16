@@ -6,6 +6,8 @@
   display: grid;
   grid-template-columns: 1fr 3fr;
   column-gap: 10px;
+
+  text-align: left;
 }
 
 .Comment section > p {
@@ -17,6 +19,8 @@
   
   padding-right: 5px;
   border-right: 1px solid black;
+
+  text-align: center;
 }
 
 .Comment > p {
@@ -30,6 +34,8 @@
 
   grid-column: 1 / span 2;
   grid-row: 2;
+
+  text-align: center;
 }
 
 .Comment > .DeleteCommentSection .ConfirmDeleteButton {
