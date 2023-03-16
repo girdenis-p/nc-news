@@ -72,7 +72,10 @@ function Comment({ comment, setComments }) {
                   <p>Are you sure you want to delete this comment?</p> 
                   <button className="ConfirmDeleteButton" onClick={handleDelete}>Yes</button>
                   <button className="ConfirmDeleteButton" onClick={
-                    () => setPromptDeleteConfirmation(false)
+                    () => {
+                      setPromptDeleteConfirmation(false)
+                      setErr(null)
+                    }
                   }>No</button>
                 </> :
                 <button onClick={() => {
