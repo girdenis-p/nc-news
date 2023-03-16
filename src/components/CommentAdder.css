@@ -27,6 +27,7 @@
 
 .CommentAdder textarea {
   margin: 5px;
+  padding: 2px 5px;
   
   width: 80%;  
   height: 90%;
