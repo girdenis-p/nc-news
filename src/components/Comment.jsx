@@ -28,13 +28,16 @@ function Comment({ comment, setComments }) {
 
     deleteCommentById(comment.comment_id)
       .then(() => {
-        setComments(currComments => {
-          const commentIndex = currComments.indexOf(comment)
-
-          return currComments
-            .slice(0, commentIndex)
-            .concat(currComments.slice(commentIndex + 1))
-        })
+        setTimeout(
+          () => {
+            setComments(currComments => {
+              const commentIndex = currComments.indexOf(comment)
+    
+              return currComments
+                .slice(0, commentIndex)
+                .concat(currComments.slice(commentIndex + 1))
+            })
+          }, 1000)
       })
       .catch(() => {
         setIsPendingDelete(false);
