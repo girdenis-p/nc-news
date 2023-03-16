@@ -1,0 +1,8 @@
+.ErrorPage .ErrorCode {
+  font-size: 5em;
+  margin: 10px;
+}
+
+.ErrorPage p {
+  margin: 10px;
+}
