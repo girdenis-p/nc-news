@@ -14,6 +14,10 @@ This app is intended to be the outline of a generic news app. Including function
 - Voting system on articles
 - Ability to post and delete comments on an article
 
+### Using the app
+
+Following the link to the deployed app above, one may navigate to different topics using the nav bar or may scroll down for more articles. Each article card is a link that takes one to the selected article, there one may vote on the article and/or post a comment. Currently, the default user is the same for anyone using the app. Comments made by this user can also be deleted.
+
 ### Link to backend repo
 
 https://github.com/girdenis-p/news-api
