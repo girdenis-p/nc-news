@@ -48,7 +48,7 @@ Then install the dependencies by running:
 
 ### Running the app locally
 
-To run the app on localhost, you can use the pre-defined react script by running:
+To run the app on localhost, you can use the pre-defined Create React App script by running:
 ```
   $ npm start
 ```
